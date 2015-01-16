@@ -25,8 +25,8 @@ SSH into your server as a root or do ``sudo -i``.
 Then install necessary software::
 
     apt-get update
-    apt-get install -y xvfb fluxbox x11vnc dbus libasound2 libqt4-dbus libqt4-network libqtcore4 libqtgui4 libxss1 libpython2.7 libqt4-xml libaudio2 libmng1 fontconfig liblcms1 lib32stdc++6 lib32asound2 ia32-libs libc6-i386 lib32gcc1 nano
-    wget http://www.skype.com/go/getskype-linux-beta-ubuntu-64 -O skype-linux-beta.deb
+    apt-get install -y xvfb fluxbox x11vnc dbus libasound2 libqt4-dbus libqt4-network libqtcore4 libqtgui4 libxss1 libpython2.7 libqt4-xml libaudio2 libmng1 fontconfig liblcms1 lib32stdc++6 lib32asound2 ia32-libs libc6-i386 lib32gcc1 nano python-virtualenv
+    wget http://www.skype.com/go/getskype-linux-beta-ubuntu-64 -O skype-linux-beta.deb 
     # if there are other unresolved dependencies install missing packages using apt-get install and then install the skype deb package again
     dpkg -i skype-linux-beta.deb
 
@@ -126,10 +126,18 @@ Login to your server as ``skype`` user over SSH::
 Deploy ``sevabot``, as checked out from Github earlier, using `Python virtualenv <http://pypi.python.org/pypi/virtualenv/>`_::
 
     cd sevabot
+    virtualenv venv
+    . venv/bin/activate
+    python setup.py develop
+
+**ALTERNATIVE** on some older Ubuntus - do only if the virtualenv and pip installation above doesn't seem to work:
+
+    cd sevabot
     curl -L -o virtualenv.py https://raw.github.com/pypa/virtualenv/master/virtualenv.py
     python virtualenv.py venv
     . venv/bin/activate
-    python setup.py develop
+    . venv/bin/activate
+    
 
 This will
 
@@ -316,8 +324,7 @@ Install Sevabot::
 
     git clone git://github.com/opensourcehacker/sevabot.git
     cd sevabot
-    curl -L -o virtualenv.py https://raw.github.com/pypa/virtualenv/master/virtualenv.py
-    python virtualenv.py venv
+    virtualenv venv  # Assume we use Python 2.7 virtualenv installed from Ubuntu 12.04 package manager
     . venv/bin/activate
     python setup.py develop
 
