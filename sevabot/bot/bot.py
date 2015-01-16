@@ -81,7 +81,7 @@ class Sevabot:
             chat_id = get_chat_id(chat)
             logger.debug("chat %s = %s" % (chat.FriendlyName, chat_id))
             self.chats[chat_id] = chat
-   
+
         logger.debug("Async cacheChats() completed")
 
     def getOpenChats(self):

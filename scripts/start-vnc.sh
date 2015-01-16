@@ -4,7 +4,7 @@
 # Script by mweber at http://www.qxs.ch/2011/01/07/skype-instant-messages-from-zabbix/
 ##
 
-DAEMON_USER=ubuntu
+DAEMON_USER=skype
 XSERVERNUM=1
 
 if [[ "$USER" != "$DAEMON_USER" ]]; then
@@ -15,11 +15,10 @@ fi
 
 export DISPLAY=:$XSERVERNUM
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$DIR/../"
+dnb=`dirname "$0"`
 
 start() {
-    SERVICES='xvfb fluxbox skype' "scripts/start-server.sh" status
+    SERVICES='xvfb fluxbox skype' "$dnb/start-server.sh" status
     if [[ "$?" == '0' ]]; then
         echo "Starting x11vnc"
         if [[ `ps aux | grep "$DAEMON_USER" | grep "x11vnc -display :$XSERVERNUM" | grep -v grep | wc -l` == '0' ]]; then
@@ -40,7 +39,7 @@ start() {
         echo "----------------------------------------------------------------------------------------"
     else
         echo "The server doesn't run."
-        echo 'Use "'"$DIR"'/start-server.sh" to start the server'
+        echo 'Use "'"$dnb"'/start-server.sh" to start the server'
     fi
 
 }

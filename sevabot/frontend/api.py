@@ -194,7 +194,7 @@ class JenkinsNotifier(SendMessage):
             return "Jenkins bad notification: Could not read HTTP POST data"
         # Filter out completed status, lots of unneeded noise
         if payload['build']['phase'] != 'COMPLETED':
-            if payload['build']['status'] == 'SUCCESS':
+            if payload['build'].get('status') == 'SUCCESS':
                 msg = u'Project: %s build #%d %s Status: %s - (sun) - %s\n' % (payload['name'], payload['build']['number'], payload['build']['phase'], payload['build']['status'], payload['build']['full_url'])
             elif payload['build']['status'] == 'FAILURE':
                 msg = u'Project: %s build #%d %s Status: %s - (rain) - %s\n' % (payload['name'], payload['build']['number'], payload['build']['phase'], payload['build']['status'], payload['build']['full_url'])
@@ -264,5 +264,3 @@ def configure(sevabot, settings, server):
     server.add_url_rule('/teamcity/<string:chat_id>/<string:shared_secret>/', view_func=TeamcityWebHook.as_view(str('send_message_teamcity'), sevabot=sevabot, shared_secret=settings.SHARED_SECRET))
 
     server.add_url_rule('/jenkins-webhook/', view_func=JenkinsWebHook.as_view(str('jenkins_webhook'), sevabot=sevabot, shared_secret=settings.SHARED_SECRET))
-
-

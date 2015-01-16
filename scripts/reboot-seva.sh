@@ -18,8 +18,8 @@
 #
 # sudo -i -u skype /home/skype/sevabot/scripts/reboot-seva.sh
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$DIR/../"
+
+cd ~/sevabot
 
 # Assume sevabot has been cloned under ~/sevabot
 
